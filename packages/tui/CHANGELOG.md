@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Welcome, setup, and desktop notification labels now display Atom.
+- Welcome, setup, and desktop notification labels now display Atom ([#1](https://github.com/CryptoLibertus/oh-my-pi/pull/1) by [@CryptoLibertus](https://github.com/CryptoLibertus)).
 
 ## [18.4.4] - 2026-09-29
 

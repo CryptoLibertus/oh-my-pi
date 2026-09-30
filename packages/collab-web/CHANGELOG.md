@@ -4,7 +4,7 @@
 
 ### Changed
 
-- The collaboration client now displays Atom in its interface and browser metadata.
+- The collaboration client now displays Atom in its interface and browser metadata ([#1](https://github.com/CryptoLibertus/oh-my-pi/pull/1) by [@CryptoLibertus](https://github.com/CryptoLibertus)).
 
 ## [18.4.1] - 2026-09-28
 

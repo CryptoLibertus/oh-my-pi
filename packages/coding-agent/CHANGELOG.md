@@ -10,7 +10,7 @@
 
 ### Changed
 
-- The interface is now branded Atom; the `omp` command, package identifiers, and existing configuration and session paths remain compatible.
+- The interface is now branded Atom; the `omp` command, package identifiers, and existing configuration and session paths remain compatible ([#1](https://github.com/CryptoLibertus/oh-my-pi/pull/1) by [@CryptoLibertus](https://github.com/CryptoLibertus)).
 
 - `--no-ui` now also works with `--mode rpc-ui`: extensions run headless while tool UI such as the `ask` tool still reaches the host ([#13718](https://github.com/can1357/oh-my-pi/pull/13718) by [@alphastorm](https://github.com/alphastorm))
 
