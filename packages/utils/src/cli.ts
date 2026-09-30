@@ -150,6 +150,8 @@ export interface CommandCtor extends CommandMetadata {
 /** Configuration passed to every command instance and help renderers. */
 export interface CliConfig<TCommand extends CommandMetadata = CommandCtor> {
 	bin: string;
+	/** Human-readable help heading; command examples continue to use bin. */
+	displayName?: string;
 	version: string;
 	/** All registered commands keyed by their canonical name. */
 	commands: Map<string, TCommand>;
@@ -296,7 +298,7 @@ export abstract class Command {
 export function renderRootHelp(config: CliConfig<CommandMetadata>): void {
 	const { bin, version, commands } = config;
 	const lines: string[] = [];
-	lines.push(`${bin} v${version}\n`);
+	lines.push(`${config.displayName ?? bin} v${version}\n`);
 	lines.push("USAGE");
 	lines.push(`  $ ${bin} [COMMAND]\n`);
 

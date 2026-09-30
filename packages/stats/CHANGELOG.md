@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- The usage dashboard now displays Atom branding ([#1](https://github.com/CryptoLibertus/oh-my-pi/pull/1) by [@CryptoLibertus](https://github.com/CryptoLibertus)).
+
 ## [18.4.4] - 2026-09-29
 
 ### Added

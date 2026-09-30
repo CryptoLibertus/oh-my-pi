@@ -1,10 +1,10 @@
-# @oh-my-pi/pi-coding-agent
+# Atom coding agent
 
-Core implementation package for the `omp` coding agent in the `omp` monorepo.
+Core implementation package for Atom. The package remains `@oh-my-pi/pi-coding-agent` and the command remains `omp` for compatibility; existing `~/.omp` settings and sessions continue to work.
 
 For installation, setup, provider configuration, model roles, slash commands, and full CLI reference, see:
 - [Monorepo README (local)](../../README.md)
-- [Monorepo README (GitHub)](https://github.com/can1357/oh-my-pi#readme)
+- [Monorepo README (GitHub)](https://github.com/CryptoLibertus/oh-my-pi#readme)
 
 Package-specific references:
 - [CHANGELOG](./CHANGELOG.md)

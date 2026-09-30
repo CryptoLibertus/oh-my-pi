@@ -1,10 +1,8 @@
-<p align="center">
-  <img src="https://github.com/can1357/oh-my-pi/blob/main/assets/hero.png?raw=true" alt="omp">
-</p>
+<h1 align="center">Atom</h1>
 
 <p align="center">
   <strong>A coding agent with the IDE wired in.</strong>
-  <strong><a href="https://omp.sh">omp.sh</a></strong>
+  <strong><a href="https://github.com/CryptoLibertus/oh-my-pi">Atom on GitHub</a></strong>
 </p>
 
 <p align="center">
@@ -19,7 +17,7 @@
 </p>
 
 <p align="center">
-  Built by <a href="https://stencil.so">Stencil Labs</a> · Fork of <a href="https://github.com/badlogic/pi-mono">Pi</a> by <a href="https://github.com/mariozechner">@mariozechner</a>
+  Based on <a href="https://github.com/can1357/oh-my-pi">Oh My Pi</a> by <a href="https://stencil.so">Stencil Labs</a> · Originally a fork of <a href="https://github.com/badlogic/pi-mono">Pi</a> by <a href="https://github.com/mariozechner">@mariozechner</a>
 </p>
 
 The most capable agent surface that ships. Continuously tuned by real-world use — complete out of the box, open all the way down.
@@ -32,7 +30,20 @@ The most capable agent surface that ships. Continuously tuned by real-world use 
 > while we evaluate how open contributions go. Depending on the results, the
 > vouch system may return.
 
-## Install
+## Install Atom from source
+
+```sh
+git clone https://github.com/CryptoLibertus/oh-my-pi.git
+cd oh-my-pi
+bun setup
+bun dev
+```
+
+Use Bun ≥ 1.4 and the Rust toolchain pinned in `rust-toolchain.toml`; see [Development](#development) for build prerequisites. Atom currently keeps the `omp` executable, `@oh-my-pi/*` package names, `.omp` configuration/session directories, and `OMP_*` / `PI_*` environment variables for compatibility. No settings migration is needed.
+
+### Upstream installation methods
+
+The commands below install **upstream Oh My Pi**, not this Atom fork. They remain here as upstream reference; Atom has not published separate packages or release binaries.
 
 **macOS · Linux**
 
@@ -164,7 +175,7 @@ _[Watch the capture ↗](https://omp.sh/clips/ttsr.mp4)_
 
 Split a job across workers and get typed results back. task fans out into isolated worktrees, each worker runs its own tool surface, and the final yield is a schema-validated object the parent reads directly. No prose to parse, no merge conflicts between siblings, no orphaned edits.
 
-![omp TUI showing `task` spawning two subagents `ComponentsExports` and `RoutesExports`, the constraints block requiring an IRC DM between peers, the per-subagent status cards with cost and duration, and a final Findings section listing both exports plus an honest 'IRC coordination note' about a one-sided handshake.](https://omp.sh/clips/irc-poster.webp)
+![Upstream Oh My Pi TUI showing `task` spawning two subagents `ComponentsExports` and `RoutesExports`, the constraints block requiring an IRC DM between peers, the per-subagent status cards with cost and duration, and a final Findings section listing both exports plus an honest 'IRC coordination note' about a one-sided handshake.](https://omp.sh/clips/irc-poster.webp)
 
 _[Watch the capture ↗](https://omp.sh/clips/irc.mp4)_
 
@@ -503,7 +514,7 @@ The TUI is the default surface. Tool calls render as cards, edits preview before
 
 The same prompt cards surface over ACP, so editors get the picker without writing one.
 
-![omp TUI showing a multi-select question from the ask tool.](assets/ask.webp)
+![Upstream Oh My Pi TUI showing a multi-select question from the ask tool.](assets/ask.webp)
 
 ### SDK — embed in Node
 
@@ -551,7 +562,7 @@ $ omp --mode rpc --no-session
 
 The [Agent Client Protocol](https://github.com/zed-industries/agent-client-protocol) over JSON-RPC. When the editor advertises capabilities, tool I/O routes through it and writes are gated by `session/request_permission`.
 
-| omp tool     | ACP route                           |
+| Atom tool     | ACP route                           |
 | ------------ | ----------------------------------- |
 | `bash`       | `terminal/create + terminal/output` |
 | `read`       | `fs/read_text_file`                 |
@@ -562,9 +573,9 @@ Full reference: [omp.sh/docs/sdk](https://omp.sh/docs/sdk).
 
 ## A harness worth keeping is one you _don't_ outgrow.
 
-Pick it up at **[omp.sh](https://omp.sh)**.
+Build Atom from this fork using the [source installation](#install-atom-from-source). Upstream documentation is available at [omp.sh](https://omp.sh).
 
-omp is a fork of [Pi](https://github.com/badlogic/pi-mono) by [Mario Zechner](https://github.com/mariozechner), rewritten as a coding-first surface: sessions, subagents, slash commands, extensions — all TypeScript, all MIT, all on [GitHub](https://github.com/can1357/oh-my-pi). Shape it from config, hook it from outside, or read the source when you need to.
+Atom builds on [Oh My Pi](https://github.com/can1357/oh-my-pi), a fork of [Pi](https://github.com/badlogic/pi-mono) by [Mario Zechner](https://github.com/mariozechner), rewritten as a coding-first surface: sessions, subagents, slash commands, extensions — all TypeScript, all MIT, all on [GitHub](https://github.com/can1357/oh-my-pi). Shape it from config, hook it from outside, or read the source when you need to.
 
 ### Primitives
 
@@ -572,15 +583,15 @@ An extension is a TypeScript module. Same tool API, same slash-command registry,
 
 ### Discovery
 
-On first run omp inherits whatever is already on disk: rules, skills, and MCP servers from `.claude`, `.cursor`, `.windsurf`, `.gemini`, `.codex`, `.cline`, `.github/copilot`, and `.vscode`. No migration script.
+On first run Atom inherits whatever is already on disk: rules, skills, and MCP servers from `.claude`, `.cursor`, `.windsurf`, `.gemini`, `.codex`, `.cline`, `.github/copilot`, and `.vscode`. No migration script.
 
 ### Extensibility
 
-Ask omp to write the piece you're missing, then `/reload-plugins`. Keep it local, ship it in a `marketplace`, or publish it to npm.
+Ask Atom to write the piece you're missing, then `/reload-plugins`. Keep it local, ship it in a `marketplace`, or publish it to npm.
 
 ## Philosophy
 
-omp is a fork of [pi-mono](https://github.com/badlogic/pi-mono) by [Mario Zechner](https://github.com/mariozechner), extended with a batteries-included coding workflow.
+Atom builds on [Oh My Pi](https://github.com/can1357/oh-my-pi), which is a fork of [pi-mono](https://github.com/badlogic/pi-mono) by [Mario Zechner](https://github.com/mariozechner), extended with a batteries-included coding workflow.
 
 Key ideas:
 
@@ -648,7 +659,7 @@ For architecture and contribution guidelines, see [packages/coding-agent/DEVELOP
 | **[@oh-my-pi/omptype](packages/omptype)**                                     | ArkType-compatible schema validation with lazy JIT compilation              |
 | **[@oh-my-pi/pi-utils](packages/utils)**                                      | Shared utilities (logging, streams, dirs/env/process helpers)               |
 | **[@oh-my-pi/pi-wire](packages/wire)**                                        | Shared collab live-session protocol types and relay constants               |
-| **[@oh-my-pi/pi-mnemopi](packages/mnemopi)**                                  | Local SQLite memory engine for omp agents                                   |
+| **[@oh-my-pi/pi-mnemopi](packages/mnemopi)**                                  | Local SQLite memory engine for Atom agents                                   |
 | **[@oh-my-pi/snapcompact](packages/snapcompact)**                             | Bitmap-frame context compression package and SQuAD eval suite               |
 | **[@oh-my-pi/browser-relay](packages/browser-relay)**                         | Chrome extension that lets the Eval browser API drive your existing tabs    |
 | **[@oh-my-pi/pi-metaharness](packages/metaharness)**                          | Unified benchmark runners, Harbor run storage, REST/SSE API, live dashboard |
@@ -679,7 +690,7 @@ guidelines on contributing.
 
 ## License
 
-OMP is licensed under the [MIT License](LICENSE).
+Atom is licensed under the [MIT License](LICENSE).
 
 Third-party and vendored code, including `crates/vendor/brush-core` and the
 third-party portions identified in `crates/pi-builtins/LICENSE`, remains under
@@ -694,7 +705,8 @@ _made for terminals that stay open_
 
 - [omp.sh](https://omp.sh)
 - [Stencil Labs](https://stencil.so)
-- [GitHub](https://github.com/can1357/oh-my-pi)
+- [Atom on GitHub](https://github.com/CryptoLibertus/oh-my-pi)
+- [Upstream Oh My Pi](https://github.com/can1357/oh-my-pi)
 - [Changelog](https://github.com/can1357/oh-my-pi/blob/main/packages/coding-agent/CHANGELOG.md)
 - [npm](https://www.npmjs.com/package/@oh-my-pi/pi-coding-agent)
 - [Discord](https://discord.gg/4NMW9cdXZa)
