@@ -1,42 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, setSystemTime, vi } from "bun:test";
-import type {
-	ExtensionAPI,
-	ExtensionContext,
-	ExtensionHandler,
-	SessionShutdownEvent,
-	SessionStartEvent,
-} from "@oh-my-pi/pi-coding-agent/extensibility/extensions/types";
-import clock from "../examples/extensions/clock";
-
-function createClock(hasUI = true) {
-	let start: ExtensionHandler<SessionStartEvent> | undefined;
-	let shutdown: ExtensionHandler<SessionShutdownEvent> | undefined;
-	const api = {
-		on(event: string, handler: ExtensionHandler<SessionStartEvent> | ExtensionHandler<SessionShutdownEvent>) {
-			if (event === "session_start") start = handler as ExtensionHandler<SessionStartEvent>;
-			if (event === "session_shutdown") shutdown = handler as ExtensionHandler<SessionShutdownEvent>;
-		},
-	} as ExtensionAPI;
-	const statuses = new Map<string, string>();
-	const setStatus = vi.fn((key: string, text: string | undefined) => {
-		if (text === undefined) statuses.delete(key);
-		else statuses.set(key, text);
-	});
-	const ctx = {
-		hasUI,
-		ui: { setStatus },
-		setInterval: vi.fn((callback: () => void, ms: number) => setInterval(callback, ms)),
-		clearTimer: (timer: Timer) => clearInterval(timer),
-	} as unknown as ExtensionContext;
-	clock(api);
-	return {
-		statuses,
-		setStatus,
-		ctx,
-		start: () => start?.({ type: "session_start" }, ctx),
-		shutdown: () => shutdown?.({ type: "session_shutdown" }, ctx),
-	};
-}
+import clockExtension from "../examples/extensions/clock";
+import { createExtensionHarness } from "./helpers/extension-harness";
 
 describe("clock extension", () => {
 	beforeEach(() => {
@@ -50,46 +14,50 @@ describe("clock extension", () => {
 	});
 
 	it("shows local time immediately and advances across midnight without user input", async () => {
-		const clock = createClock();
+		const clock = await createExtensionHarness(clockExtension);
 		try {
 			await clock.start();
 			expect(clock.statuses.get("clock")).toBe("23:59:59");
 			vi.advanceTimersByTime(1000);
 			expect(clock.statuses.get("clock")).toBe("00:00:00");
 		} finally {
-			await clock.shutdown();
+			await clock.dispose();
 		}
 	});
 
 	it("clears its status and stops updates on unload, and restarts only one clock on reload", async () => {
-		const clock = createClock();
+		const clock = await createExtensionHarness(clockExtension);
 		clock.statuses.set("other-extension", "Keep me");
 		try {
 			await clock.start();
 			await clock.shutdown();
-			const callsAfterUnload = clock.setStatus.mock.calls.length;
+			const callsAfterUnload = clock.statusUpdates.length;
 			vi.advanceTimersByTime(3000);
-			expect(clock.setStatus.mock.calls.length).toBe(callsAfterUnload);
+			expect(clock.statusUpdates.length).toBe(callsAfterUnload);
 			expect(clock.statuses.has("clock")).toBe(false);
 			expect(clock.statuses.get("other-extension")).toBe("Keep me");
 
+			await clock.reload();
 			await clock.start();
-			await clock.start();
-			clock.setStatus.mockClear();
+			clock.statusUpdates.length = 0;
 			vi.advanceTimersByTime(1000);
-			expect(clock.setStatus).toHaveBeenCalledTimes(1);
+			expect(clock.statusUpdates).toHaveLength(1);
 			expect(clock.statuses.get("clock")).toBe("00:00:03");
 		} finally {
-			await clock.shutdown();
+			await clock.dispose();
 		}
 	});
 
 	it("does not schedule or emit status updates in headless sessions", async () => {
-		const clock = createClock(false);
-		await clock.start();
-		vi.advanceTimersByTime(3000);
-		await clock.shutdown();
-		expect(clock.ctx.setInterval).not.toHaveBeenCalled();
-		expect(clock.setStatus).not.toHaveBeenCalled();
+		const clock = await createExtensionHarness(clockExtension, { hasUI: false });
+		try {
+			await clock.start();
+			vi.advanceTimersByTime(3000);
+			await clock.shutdown();
+			expect(vi.getTimerCount()).toBe(0);
+			expect(clock.statusUpdates).toHaveLength(0);
+		} finally {
+			await clock.dispose();
+		}
 	});
 });

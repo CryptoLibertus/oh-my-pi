@@ -20,7 +20,8 @@ on:
       - "scripts/**"
       - "docs/**"
   pull_request:
-    branches: [main]
+    # Validate the extension harness while it is stacked on the clock PR.
+    branches: [main, feature/clock-extension]
     paths:
       - ".github/workflows/nix.yml"
       - ".cargo/**"

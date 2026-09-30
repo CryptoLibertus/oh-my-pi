@@ -161,3 +161,30 @@ Or copy `clock.ts` into `~/.omp/agent/extensions/` for automatic discovery in ot
 projects. Use `--no-extensions` to disable automatic extension discovery. The
 clock follows the machine's time zone, including `TZ` when configured before
 launch; it does not infer your location.
+
+## Testing extensions in this repository
+
+Use `createExtensionHarness` from `test/helpers/extension-harness.ts` for Bun
+integration tests of an extension factory. It uses the production extension
+loader, event runner, and managed timers, with in-memory auth and sessions in an
+isolated temporary directory. It never starts a model request or terminal.
+
+The clock tests in `test/clock-extension.test.ts` demonstrate immediate status,
+local midnight rollover, restart/reload cleanup, and headless behavior:
+
+```bash
+bun test packages/coding-agent/test/clock-extension.test.ts packages/coding-agent/test/extension-harness.test.ts
+```
+
+- `await createExtensionHarness(factory, { hasUI: false })` exercises headless mode.
+- `start()`, `shutdown()`, and `reload()` drive lifecycle events; reload creates a
+  fresh factory/runner and clears old timers and statuses.
+- Inspect `statuses`, `statusUpdates`, `notifications`, and `errors` for observable
+  results. Use `runner` for other events and registered tools or commands.
+- Supply `ui`, `actions`, or `contextActions` overrides for host interactions.
+  Unsupported runtime actions fail visibly instead of becoming silent no-ops.
+- Bun's `vi.useFakeTimers()` and `vi.advanceTimersByTime()` drive real managed
+  timers. Always `await harness.dispose()` in `finally` before restoring timers.
+
+This is a development test helper, not a simulation of terminal layout or provider
+requests. Use the actual CLI for visual verification.

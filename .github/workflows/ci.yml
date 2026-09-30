@@ -31,7 +31,8 @@ on:
          - "patches/**"
          - ".github/**"
    pull_request:
-      branches: [main, omp2]
+      # Validate the extension harness while it is stacked on the clock PR.
+      branches: [main, omp2, feature/clock-extension]
       paths:
          - "packages/**"
          - "crates/**"
