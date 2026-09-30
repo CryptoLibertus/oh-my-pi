@@ -94,6 +94,39 @@ describe("renderCpuProfile", () => {
 		expect(section).not.toContain("(idle)");
 	});
 
+	it("merges repeated sibling frames and their descendants without conflating call sites", () => {
+		const root = { id: 1, callFrame: frame("(root)"), children: [2, 3, 4, 5] };
+		const shared = frame("work", "file:///app/work.ts", 0);
+		const nodes = [
+			root,
+			{ id: 2, callFrame: shared, hitCount: 2, children: [6] },
+			{ id: 3, callFrame: frame("work", "file:///app/work.ts", 1), hitCount: 10 },
+			{ id: 4, callFrame: shared, hitCount: 3, children: [7, 8] },
+			{ id: 5, callFrame: frame("work", "file:///app/other.ts", 0), hitCount: 10 },
+			{ id: 6, callFrame: frame("child"), hitCount: 4 },
+			{ id: 7, callFrame: frame("child"), hitCount: 5 },
+			{ id: 8, callFrame: frame("otherChild"), hitCount: 6 },
+		];
+		const render = (entries: typeof nodes) =>
+			renderCpuProfile(JSON.stringify({ nodes: entries, startTime: 0, endTime: 40_000 }));
+		const actual = render(nodes);
+		// Equivalent profile with repeated call sites already coalesced. Both
+		// hot-path inclusive time and the self-time table must stay identical.
+		expect(actual).toEqual(
+			render([
+				{ ...root, children: [2, 3, 5] },
+				{ ...nodes[1], hitCount: 5, children: [6, 8] },
+				nodes[2],
+				nodes[4],
+				{ ...nodes[5], hitCount: 9 },
+				nodes[7],
+			]),
+		);
+		expect(actual).toContain("20.0  50.0%  work (/app/work.ts:1)");
+		expect(actual).toContain("10.0  25.0%  work (/app/work.ts:2)");
+		expect(actual).toContain("10.0  25.0%  work (/app/other.ts:1)");
+	});
+
 	it("falls back to hitCount-based self time when sample streams are absent", () => {
 		const { samples: _samples, timeDeltas: _timeDeltas, ...bare } = FIXTURE_PROFILE;
 		const fromHits = renderCpuProfile(JSON.stringify(bare));

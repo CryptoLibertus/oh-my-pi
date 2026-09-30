@@ -10,6 +10,8 @@
 
 ### Changed
 
+- Summarizing V8 CPU profiles with many sibling call frames is faster ([#4](https://github.com/CryptoLibertus/oh-my-pi/pull/4) by [@CryptoLibertus](https://github.com/CryptoLibertus)).
+
 - `--no-ui` now also works with `--mode rpc-ui`: extensions run headless while tool UI such as the `ask` tool still reaches the host ([#13718](https://github.com/can1357/oh-my-pi/pull/13718) by [@alphastorm](https://github.com/alphastorm))
 
 ### Fixed

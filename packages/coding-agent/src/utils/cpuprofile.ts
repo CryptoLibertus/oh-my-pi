@@ -160,13 +160,18 @@ export function renderCpuProfile(text: string): string | null {
 	const build = (node: CpuProfileNode): ProfileNode => {
 		visited.add(node.id);
 		const children: ProfileNode[] = [];
+		// Index siblings once instead of rescanning the growing list for each frame.
+		const childrenByKey = new Map<string, ProfileNode>();
 		for (const childId of node.children ?? []) {
 			const rawChild = byId.get(childId);
 			if (!rawChild || visited.has(childId)) continue;
 			const child = build(rawChild);
-			const existing = children.find(c => c.key === child.key);
+			const existing = childrenByKey.get(child.key);
 			if (existing) mergeInto(existing, child);
-			else children.push(child);
+			else {
+				children.push(child);
+				childrenByKey.set(child.key, child);
+			}
 		}
 		const isIdle = node.callFrame.functionName === IDLE_FRAME;
 		let value = isIdle ? 0 : (self.get(node.id) ?? 0);
