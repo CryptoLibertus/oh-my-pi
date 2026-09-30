@@ -41,6 +41,7 @@ cp permission-gate.ts ~/.omp/agent/extensions/
 | `handoff.ts`       | Transfer context to a new focused session via `/handoff <goal>`                |
 | `qna.ts`           | Extracts questions from last response into editor via `ctx.ui.setEditorText()` |
 | `status-line.ts`   | Shows turn progress in footer via `ctx.ui.setStatus()` with themed colors      |
+| `clock.ts`         | Live local time in the status bar below the command editor                      |
 | `thinking-note.ts` | Adds display-only supplemental UI below assistant thinking blocks              |
 | `snake.ts`         | Snake game with custom UI, keyboard handling, and session persistence          |
 
@@ -141,3 +142,22 @@ pi.on("session_start", async (_event, ctx) => {
 	}
 });
 ```
+
+## Clock
+
+`clock.ts` shows the running machine's local time as `HH:mm:ss` in the footer/status
+bar below the command editor. It updates once per second, works while idle or
+streaming, and leaves other extension statuses intact. Managed timers stop on
+shutdown or `/reload`; headless sessions do not start a clock.
+
+The repository enables it through `.omp/extensions/clock.ts` when started from
+the repository root. For another project, run (from this repository):
+
+```bash
+omp --extension ./packages/coding-agent/examples/extensions/clock.ts
+```
+
+Or copy `clock.ts` into `~/.omp/agent/extensions/` for automatic discovery in other
+projects. Use `--no-extensions` to disable automatic extension discovery. The
+clock follows the machine's time zone, including `TZ` when configured before
+launch; it does not infer your location.
