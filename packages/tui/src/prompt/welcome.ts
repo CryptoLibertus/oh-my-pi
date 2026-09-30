@@ -1,4 +1,4 @@
-import { APP_NAME } from "@oh-my-pi/pi-utils/dirs";
+import { APP_DISPLAY_NAME } from "@oh-my-pi/pi-utils/dirs";
 import type { TspSpan } from "@oh-my-pi/pi-wire";
 import { formatDoubleTap, formatKeyHint, formatKeyHints, type KeyName } from "../app-keybindings";
 import { editorKey } from "../chrome/keybinding-hints";
@@ -243,7 +243,7 @@ export class WelcomeComponent implements Component {
 						"image",
 						{
 							blob: welcomeLogoBlob(),
-							alt: APP_NAME,
+							alt: APP_DISPLAY_NAME,
 							w: 128,
 							role: "omp.welcome.logo",
 						},
@@ -558,7 +558,7 @@ export class WelcomeComponent implements Component {
 		const lines: string[] = [];
 
 		// Top border with embedded title
-		const title = ` ${APP_NAME} v${this.version} `;
+		const title = ` ${APP_DISPLAY_NAME} v${this.version} `;
 		const titlePrefixRaw = hChar.repeat(3);
 		const titleStyled = theme.fg("dim", titlePrefixRaw) + theme.fg("muted", title);
 		const titleVisLen = visibleWidth(titlePrefixRaw) + visibleWidth(title);

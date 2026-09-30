@@ -17,7 +17,7 @@ import {
 	type TerminalNotification,
 	Text,
 } from "@oh-my-pi/pi-tui";
-import { getSessionsDir } from "@oh-my-pi/pi-utils";
+import { APP_DISPLAY_NAME, getSessionsDir } from "@oh-my-pi/pi-utils";
 import { editorKey } from "@oh-my-pi/pi-tui/chrome/keybinding-hints";
 import { DynamicBorder } from "@oh-my-pi/pi-tui/chrome/dynamic-border";
 import { OverlayPanel } from "@oh-my-pi/pi-tui/chrome/overlay-box";
@@ -479,7 +479,7 @@ export class DebugSelectorComponent extends OverlayPanel {
 		if (!suppressed) {
 			const sessionName = this.ctx.sessionManager.getSessionName();
 			const notification: TerminalNotification = {
-				title: sessionName || "omp",
+				title: sessionName || APP_DISPLAY_NAME,
 				body: "Terminal protocol test",
 				type: "test",
 				actions: "focus",

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- The collaboration client now displays Atom in its interface and browser metadata.
+
 ## [18.4.1] - 2026-09-28
 
 ### Fixed

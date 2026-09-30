@@ -1,11 +1,11 @@
 import { Args, type CommandMetadata, Flags } from "@oh-my-pi/pi-utils/cli";
-import { APP_NAME } from "@oh-my-pi/pi-utils/dirs";
+import { APP_DISPLAY_NAME, APP_NAME } from "@oh-my-pi/pi-utils/dirs";
 import { formatKeyHint } from "@oh-my-pi/pi-tui/key-hint-format";
 import { CLI_THINKING_LEVELS } from "@oh-my-pi/pi-tui/thinking";
 import { SERVICE_TIER_OPENAI_VALUES } from "../config/service-tier";
 
 export const launchHelp = {
-	description: "AI coding assistant",
+	description: `${APP_DISPLAY_NAME} — AI coding assistant`,
 	hidden: true,
 	args: {
 		messages: Args.string({
@@ -58,8 +58,8 @@ export const launchHelp = {
 		print: Flags.boolean({ char: "p", description: "Non-interactive mode: process prompt and exit" }),
 		continue: Flags.boolean({ char: "c", description: "Continue previous session" }),
 		resume: Flags.string({ char: "r", description: "Resume a session (by ID prefix, path, or picker if omitted)" }),
-		"from-claude": Flags.boolean({ description: "Import a Claude Code session into OMP" }),
-		"from-codex": Flags.boolean({ description: "Import a Codex session into OMP" }),
+		"from-claude": Flags.boolean({ description: `Import a Claude Code session into ${APP_DISPLAY_NAME}` }),
+		"from-codex": Flags.boolean({ description: `Import a Codex session into ${APP_DISPLAY_NAME}` }),
 		"session-dir": Flags.string({ description: "Directory for session storage and lookup" }),
 		"no-session": Flags.boolean({ description: "Don't save session (ephemeral)" }),
 		models: Flags.string({ description: `Comma-separated model patterns for ${formatKeyHint("ctrl+p")} cycling` }),

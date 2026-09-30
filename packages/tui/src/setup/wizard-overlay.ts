@@ -5,7 +5,7 @@ import { matchesKey } from "../keys";
 import { centerLine, padding } from "../utils";
 import { padToWidth } from "../render/utils";
 import { routeSgrMouseInput, type SgrMouseEvent } from "../mouse";
-import { APP_NAME } from "@oh-my-pi/pi-utils";
+import { APP_DISPLAY_NAME } from "@oh-my-pi/pi-utils";
 import { gradientLogo, logoNode, PI_LOGO } from "../prompt/welcome";
 import { theme } from "../theme/theme";
 import { col, node, span, text } from "../native/describe";
@@ -257,7 +257,7 @@ export class SetupWizardComponent implements Component, OverlayFocusOwner {
 					col(
 						[
 							logoNode(PI_LOGO, false),
-							text([span(APP_NAME, "accent strong")], { wrap: "none" }),
+							text([span(APP_DISPLAY_NAME, "accent strong")], { wrap: "none" }),
 							text([span(`Setup step ${this.#sceneIndex + 1} of ${this.scenes.length}`, "muted")], {
 								wrap: "none",
 							}),
@@ -283,7 +283,7 @@ export class SetupWizardComponent implements Component, OverlayFocusOwner {
 		const header = [
 			"",
 			...logo.map(line => centerLine(line, width)),
-			centerLine(theme.bold(theme.fg("accent", APP_NAME)), width),
+			centerLine(theme.bold(theme.fg("accent", APP_DISPLAY_NAME)), width),
 			centerLine(theme.fg("muted", `Setup step ${this.#sceneIndex + 1} of ${this.scenes.length}`), width),
 			"",
 			indentLine(theme.bold(title), width, SCENE_MARGIN_X),

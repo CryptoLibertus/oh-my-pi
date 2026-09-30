@@ -20,6 +20,7 @@ import type { Process, ProcessStatus } from "@oh-my-pi/pi-natives";
 import type { CliConfig, CommandMetadata } from "@oh-my-pi/pi-utils/cli";
 import type * as Postmortem from "@oh-my-pi/pi-utils/postmortem";
 import {
+	APP_DISPLAY_NAME,
 	APP_NAME,
 	getActiveProfile,
 	MIN_BUN_VERSION,
@@ -116,7 +117,7 @@ async function showHelp(config: CliConfig<CommandMetadata>): Promise<void> {
 		import("@oh-my-pi/pi-utils/cli"),
 		import("./cli/help-extra"),
 	]);
-	renderRootHelp(config);
+	renderRootHelp({ ...config, displayName: APP_DISPLAY_NAME });
 	const extra = getExtraHelpText();
 	if (extra.trim().length > 0) {
 		process.stdout.write(`\n${extra}\n`);

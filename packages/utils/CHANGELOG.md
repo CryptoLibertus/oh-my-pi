@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Expose the Atom display name separately from the compatible `omp` executable and storage identifiers.
+
 ## [18.4.4] - 2026-09-29
 
 ### Added

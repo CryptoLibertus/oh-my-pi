@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- The usage dashboard now displays Atom branding.
+
 ## [18.4.4] - 2026-09-29
 
 ### Added

@@ -18,7 +18,10 @@ import { expandWindowsLongPath } from "@oh-my-pi/pi-natives/path";
 import { engines, version } from "../package.json" with { type: "json" };
 import { isEnoent, isEnotdir } from "./fs-error";
 
-/** App name (e.g. "omp") */
+/** Human-readable product name; independent of CLI and storage identifiers. */
+export const APP_DISPLAY_NAME: string = "Atom";
+
+/** Compatibility identifier for the executable and existing storage paths. */
 export const APP_NAME: string = "omp";
 
 /** Public homepage that inference gateways (OpenRouter, Vercel AI Gateway) credit omp traffic to. */
